@@ -1,0 +1,11 @@
+langchain-community
+pymupdf
+langchain-text-splitters
+sentence-transformers
+faiss-cpu
+numpy
+joblib
+groq
+streamlit
+rank_bm25
+torchvision

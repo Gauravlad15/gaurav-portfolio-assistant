@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables / secrets
+.env
+.streamlit/secrets.toml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Generated index/data files (bade ho sakte hain, regenerate ho sakte hain)
+*.pkl
+split_docs.pkl
+index.pkl
+bm25.pkl
+
+# OS/editor junk
+.DS_Store
+.vscode/
