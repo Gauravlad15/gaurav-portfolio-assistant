@@ -6,6 +6,8 @@
 [![Groq](https://img.shields.io/badge/LLM-Groq%20Llama%203.3%2070B-F55036)](https://groq.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#license)
 
+🔗 Live Demo: huggingface.co/spaces/Gauravlad15/gaurav-portfolio-assistant
+
 A personal **portfolio chatbot** that answers questions about Gaurav's professional profile — background, skills, education, and projects — using Retrieval-Augmented Generation (RAG) over his resume/profile PDF(s). Built with **Hybrid Search (Vector + Keyword) and Cross-Encoder Re-ranking** for high-quality retrieval, and **Groq (Llama 3.3 70B)** for natural-language answer generation.
 
 ---
