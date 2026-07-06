@@ -73,13 +73,24 @@ def _tokenize(text):
 # 4. LOAD CONFIG & MODELS 
 # -------------------------------------------------------------------
 @st.cache_resource
-   
+def get_api_key():
+    # Pehle environment variable check kar (HF Spaces isi tarike se secrets deta hai)
+    api_key = os.environ.get("GROQ_API_KEY")
+    if api_key:
+        return api_key
+
+    # Agar env var nahi mila, tabhi secrets.toml try kar (sirf local ke liye)
+    try:
+        return st.secrets["GROQ_API_KEY"]
+    except Exception:
+        return None
+
 
 def load_resources():
     model = SentenceTransformer('all-MiniLM-L6-v2')
     cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
 
-    api_key = os.environ.get("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", "")
+    api_key = get_api_key()
     if not api_key:
         st.error("GROQ_API_KEY not found. Set it in HF Space secrets or .streamlit/secrets.toml locally.")
         st.stop()
@@ -95,7 +106,9 @@ def load_resources():
 
     return index, split_docs, bm25, model, cross_encoder, groq_client
 
-index, split_docs, bm25, model, cross_encoder, groq_client = load_resources()
+
+index, split_docs, bm25, model, cross_encoder, groq_client = load_resources()  
+
 
 # -------------------------------------------------------------------
 # 5. HELPER FUNCTIONS — Hybrid Search + Re-ranking
