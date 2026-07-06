@@ -2,12 +2,13 @@ import streamlit as st
 import joblib
 import re
 import numpy as np
+import os
 from numpy import float32
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from groq import Groq
 
 # -------------------------------------------------------------------
-# 1. PAGE CONFIG (must be first Streamlit command)
+# 1. PAGE CONFIG
 # -------------------------------------------------------------------
 st.set_page_config(
     page_title="Gaurav's AI Assistant",
@@ -63,23 +64,27 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -------------------------------------------------------------------
-# 3. TOKENIZER (needed for BM25 queries)
+# 3. TOKENIZER 
 # -------------------------------------------------------------------
 def _tokenize(text):
     return re.findall(r'\w+', text.lower())
 
 # -------------------------------------------------------------------
-# 4. LOAD CONFIG & MODELS (Keep in memory once)
+# 4. LOAD CONFIG & MODELS 
 # -------------------------------------------------------------------
 @st.cache_resource
+   
+
 def load_resources():
     model = SentenceTransformer('all-MiniLM-L6-v2')
     cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
 
-    # SECURITY: key comes from Streamlit secrets, not hardcoded.
-    # Add this to .streamlit/secrets.toml:
-    #   GROQ_API_KEY = "your_key_here"
-    groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    api_key = os.environ.get("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", "")
+    if not api_key:
+        st.error("GROQ_API_KEY not found. Set it in HF Space secrets or .streamlit/secrets.toml locally.")
+        st.stop()
+
+    groq_client = Groq(api_key=api_key)
 
     try:
         split_docs = joblib.load('split_docs.pkl')
