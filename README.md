@@ -1,3 +1,14 @@
+---
+title: Gaurav Portfolio Assistant
+emoji: 🤖
+colorFrom: purple
+colorTo: blue
+sdk: streamlit
+sdk_version: "1.38.0"
+app_file: app.py
+pinned: false
+---
+
 # Gaurav's AI Assistant — PDF RAG Chatbot
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
